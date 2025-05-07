@@ -1,3 +1,4 @@
+package MatchEngineCLI;
 import java.util.List;
 
 public class SelectionneurSansResultat implements Selectionneur {
