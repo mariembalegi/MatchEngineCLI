@@ -32,28 +32,34 @@ public class MoteurDeMatching {
             nomRecherche = new Nom(nomRecherche.getNomNonTraite(), pretraiteur.pretraiter(nomRecherche.getNomNonTraite()));
         }
         List<Nom> nomsRecuperes = new ArrayList<>();
+        List<Object> ids = new ArrayList<>();
         List<List<Object>> lignes = recuperateur.recuperer();
 
         for (List<Object> ligne : lignes) {
             String nomBrut = ligne.get(0).toString();
-            Nom nom = new Nom(nomBrut, null);
+            Object id = ligne.get(1);
 
+            Nom nom = new Nom(nomBrut, null);
             for (Pretraiteur pretraiteur : pretraiteurs) {
                 nom = new Nom(nom.getNomNonTraite(), pretraiteur.pretraiter(nom.getNomNonTraite()));
             }
 
             nomsRecuperes.add(nom);
+            ids.add(id);
         }
 
         List<Nom> candidats = generateur.generer(nomsRecuperes, nomRecherche);
 
         List<List<Object>> resultatsAvecScore = new ArrayList<>();
-        for (Nom candidat : candidats) {
+        for (int i = 0; i < candidats.size(); i++) {
+            Nom candidat = candidats.get(i);
+            Object id = ids.get(i);
             double score = comparateur.comparer(nomRecherche, candidat);
 
             List<Object> resultat = new ArrayList<>();
             resultat.add(nomRecherche);
             resultat.add(candidat);
+            resultat.add(id);
             resultat.add(score);
 
             resultatsAvecScore.add(resultat);
@@ -62,3 +68,4 @@ public class MoteurDeMatching {
         return selectionneur.selectionner(resultatsAvecScore);
     }
 }
+
