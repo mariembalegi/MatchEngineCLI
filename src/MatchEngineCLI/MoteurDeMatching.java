@@ -1,3 +1,5 @@
+package MatchEngineCLI;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,14 +9,14 @@ public class MoteurDeMatching {
     private Recuperateur recuperateur;
     private Comparateur comparateur;
     private Selectionneur selectionneur;
-    private Generateur generateur;
+    private GenerateurCandidats generateur;
 
     public MoteurDeMatching(
             List<Pretraiteur> pretraiteurs,
             Recuperateur recuperateur,
             Comparateur comparateur,
             Selectionneur selectionneur,
-            Generateur generateur
+            GenerateurCandidats generateur
     ) {
         this.pretraiteurs = pretraiteurs;
         this.recuperateur = recuperateur;
@@ -24,50 +26,37 @@ public class MoteurDeMatching {
     }
 
     public List<List<Object>> rechercher(String nomARechercher) {
-
         
-        Nom nomRecherche = new Nom(nomARechercher);
+        Nom nomRecherche = new Nom(nomARechercher, null);
         for (Pretraiteur pretraiteur : pretraiteurs) {
-            nomRecherche.setNomTraite(pretraiteur.pretraiter(nomRecherche.getNomNonTraite()));
+            nomRecherche = new Nom(nomRecherche.getNomNonTraite(), pretraiteur.pretraiter(nomRecherche.getNomNonTraite()));
         }
+        List<Nom> nomsRecuperes = new ArrayList<>();
+        List<List<Object>> lignes = recuperateur.recuperer();
 
-        List<List<Object>> donneesPretraitees = new ArrayList<>();
-        List<List<Object>> lignesRecuperees = recuperateur.recuperer();
+        for (List<Object> ligne : lignes) {
+            String nomBrut = ligne.get(0).toString();
+            Nom nom = new Nom(nomBrut, null);
 
-        for (List<Object> ligne : lignesRecuperees) {
-            String nomBrutRecupere = ligne.get(0).toString();
-            Object id = ligne.get(1);
-
-            Nom nomRecupere = new Nom(nomBrutRecupere);
-
-            
             for (Pretraiteur pretraiteur : pretraiteurs) {
-                nomRecupere.setNomTraite(pretraiteur.pretraiter(nomRecupere.getNomNonTraite()));
+                nom = new Nom(nom.getNomNonTraite(), pretraiteur.pretraiter(nom.getNomNonTraite()));
             }
 
-            donneesPretraitees.add(List.of(nomRecherche, nomRecupere, identifiant));
+            nomsRecuperes.add(nom);
         }
 
-        List<List<Object>> combinaisons = generateur.generer(donneesPretraitees);
+        List<Nom> candidats = generateur.generer(nomsRecuperes, nomRecherche);
+
         List<List<Object>> resultatsAvecScore = new ArrayList<>();
+        for (Nom candidat : candidats) {
+            double score = comparateur.comparer(nomRecherche, candidat);
 
-        for (List<Object> combinaison : combinaisons) {
-            Nom nomRecherche1 = (Nom) combinaison.get(0);
-            Nom nomRecupere = (Nom) combinaison.get(1);
-            Object id = combinaison.get(2);
+            List<Object> resultat = new ArrayList<>();
+            resultat.add(nomRecherche);
+            resultat.add(candidat);
+            resultat.add(score);
 
-            List<List<Object>> scores = comparateur.comparer(nomRecherche1, nomRecupere);
-            for (List<Object> scoreLigne : scores) {
-                Double score = (Double) scoreLigne.get(0);
-
-                List<Object> ligneAvecScore = new ArrayList<>();
-                ligneAvecScore.add(nomRecherche1);
-                ligneAvecScore.add(nomRecupere);
-                ligneAvecScore.add(id);
-                ligneAvecScore.add(score);
-
-                resultatsAvecScore.add(ligneAvecScore);
-            }
+            resultatsAvecScore.add(resultat);
         }
 
         return selectionneur.selectionner(resultatsAvecScore);
