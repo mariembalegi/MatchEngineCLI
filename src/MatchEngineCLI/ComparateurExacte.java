@@ -1,7 +1,7 @@
 package MatchEngineCLI;
 
 
-public class ComparateurEgalite implements Comparateur {
+public class ComparateurExacte implements Comparateur {
     @Override
     public double comparer(Nom nom1, Nom nom2) {
         boolean sontEgaux = nom1.equals(nom2);

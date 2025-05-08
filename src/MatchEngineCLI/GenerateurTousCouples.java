@@ -6,10 +6,12 @@ import java.util.ArrayList;
 public class GenerateurTousCouples implements GenerateurCandidats {
 
     @Override
-    public List<List<Nom>> generer(List<Nom> listeNoms, Nom nomRecherche) {
-        List<List<Nom>> result = new ArrayList<>();
-        for (Nom nom : listeNoms) {
-            result.add(List.of(nomRecherche, nom));
+    public List<CoupleDeNoms> generer(List<Nom> listeNoms1, List<Nom> listeNoms2) {
+        List<CoupleDeNoms> result = new ArrayList<>();
+        for (Nom nom1 : listeNoms1) {
+            for (Nom nom2 : listeNoms2) {
+                result.add(new CoupleDeNoms(nom1, nom2));
+            }
         }
         return result;
     }

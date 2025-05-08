@@ -23,6 +23,5 @@ public class Nom {
     }
 
     public List<String> getNomTraite() {return nomTraite;}
-
-
 }
+
