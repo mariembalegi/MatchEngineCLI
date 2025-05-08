@@ -7,10 +7,10 @@ public class TopNSelectionneur implements Selectionneur {
         this.n = n;
         }
         @Override
-        public List<List<Object>> selectionner(List<List<Object>> resultatsAvecScore) {
-        List<List<Object>> resultat = new ArrayList<>();
+        public List<CoupleAvecScore> selectionner(List<CoupleAvecScore> resultatsAvecScore) {
+        List<CoupleAvecScore> resultat = new ArrayList<>();
         for (int i = 0; i < n && i < resultatsAvecScore.size(); i++) {
-            List<Object> ligne = resultatsAvecScore.get(i);
+            CoupleAvecScore ligne = resultatsAvecScore.get(i);
             resultat.add(ligne);
             }
         return resultat;
