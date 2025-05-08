@@ -3,7 +3,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class GenerateurCouplesMemeTaille implements GenerateurDeCandidats {
+public class GenerateurCouplesTaille implements GenerateurDeCandidats {
 
     @Override
     public List<CoupleDeNoms> generer(List<Nom> liste1, List<Nom> liste2) {
@@ -31,7 +31,7 @@ public class GenerateurCouplesMemeTaille implements GenerateurDeCandidats {
 }
 
 /* 
-public class GenerateurCouplesTailleApproximative implements GenerateurDeCandidats {
+public class GenerateurCouplesTaille implements GenerateurDeCandidats {
     
 
     private static final int TOLERANCE_TAILLE = 1;
