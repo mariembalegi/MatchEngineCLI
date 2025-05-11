@@ -2,5 +2,5 @@ package MatchEngineCLI;
 
 import java.util.List;
 
-public record Nom(String id, String nomNonTraite, List<Nom> nomTraite) {
-}
+
+public record Nom(String id, String nomNonTraite, List<Nom> nomTraite) {}
