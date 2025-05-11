@@ -3,7 +3,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class GenerateurCouplesTaille implements GenerateurDeCandidats {
+public class GenerateurCouplesIndex implements GenerateurDeCandidats {
 
     @Override
     public List<CoupleDeNoms> generer(List<Nom> liste1, List<Nom> liste2) {
