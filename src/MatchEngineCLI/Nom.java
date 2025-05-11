@@ -5,10 +5,10 @@ import java.util.List;
 public class Nom {
     private String id;
     private String nomNonTraite;
-    private List<String> nomTraite;
+    private List<Nom> nomTraite;
 
 
-    public Nom(String id, String nomNonTraite, List<String> nomTraite) {
+    public Nom(String id, String nomNonTraite, List<Nom> nomTraite) {
         this.id = id;
         this.nomNonTraite = nomNonTraite;
         this.nomTraite=nomTraite;
@@ -22,6 +22,6 @@ public class Nom {
         return nomNonTraite;
     }
 
-    public List<String> getNomTraite() {return nomTraite;}
+    public List<Nom> getNomTraite() {return nomTraite;}
 }
 
