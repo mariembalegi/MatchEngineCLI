@@ -1,6 +1,6 @@
 package MatchEngineCLI;
 
-public class ComparateurApproximatif implements Comparateur {
+public class ComparateurApproximplements Comparateur {
 
     @Override
     public double comparer(Nom nom1, Nom nom2) {
