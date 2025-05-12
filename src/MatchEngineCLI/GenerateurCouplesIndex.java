@@ -3,22 +3,51 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class GenerateurCouplesIndex implements GenerateurDeCandidats {
+
+public class GenerateurCouplesIndex implements GenerateurCandidats {
+
+    private final int intervalle;
+    private final Map<Integer, List<Nom>> indexParTaille;
+
+    public GenerateurParTailleNomAvecIndex(int intervalle) {
+        this.intervalle = intervalle;
+        this.indexParTaille = new HashMap<>();
+    }
+
+    // Méthode pour construire l'index à partir de liste2
+    public void construireMap(List<Nom> liste2) {
+        indexParTaille.clear();
+        for (Nom n : liste2) {
+            int taille = n.getNomComplet().length();
+            List<Nom> liste = indexParTaille.get(taille);
+            if (liste == null) {
+                liste = new ArrayList<>();
+                indexParTaille.put(taille, liste);
+            }
+            liste.add(n);
+        }
+    }
 
     @Override
-    public List<CoupleDeNoms> generer(List<Nom> liste1, List<Nom> liste2) {
-        Map<Integer, List<Nom>> tailleANoms = new HashMap<>();
-        for (Nom nom : liste2) {
-            int taille = nom.toString().length();
-            if (!tailleANoms.containsKey(taille)) {
-            tailleANoms.put(taille, new ArrayList<>());
-        }
-        tailleANoms.get(taille).add(nom);
+    public List<Couple> generer(List<Nom> liste1, List<Nom> liste2) {
+        
+        if (indexParTaille.isEmpty()) {
+            construireMap(liste2);
         }
 
-        List<CoupleDeNoms> couples = new ArrayList<>();
+        List<Couple> couples = new ArrayList<>();
+        for (Nom n1 : liste1) {
+            int taille1 = n1.getNomComplet().length();
 
-        liste2.forEach(nom -> tailleANoms.computeIfAbsent(taille, k -> new ArrayList<>()).add(nom));
+            for (int t = taille1 - intervalle; t <= taille1 + intervalle; t++) {
+                List<Nom> correspondants = indexParTaille.get(t);
+                if (correspondants != null) {
+                    for (Nom n2 : correspondants) {
+                        couples.add(new Couple(n1, n2));
+                    }
+                }
+            }
+        }
 
         return couples;
     }
