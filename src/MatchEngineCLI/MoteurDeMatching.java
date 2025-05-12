@@ -49,26 +49,21 @@ public class MoteurDeMatching {
     return correspondances;
 }
 
-    public List<String> dedupliquerListeFormatee(List<Nom> liste) {
-        List<String> doublonsFormates = new ArrayList<>();
+    public List<CoupleDeNoms> dedupliquerListe(List<Nom> liste) {
+    List<CoupleDeNoms> doublons = new ArrayList<>();
 
-        for (int i = 0; i < liste.size(); i++) {
-            Nom nom1 = liste.get(i);
-            for (int j = i + 1; j < liste.size(); j++) {
-                Nom nom2 = liste.get(j);
-                double score = comparateur.comparer(nom1, nom2);
-                if (score >= 0.9) {
-                    String ligne = String.format(
-                            "Nom doublon détecté : [%s] (id=%s) ≈ [%s] (id=%s) - Score: %.2f",
-                            nom1.getNomNonTraite(), nom1.getId(),
-                            nom2.getNomNonTraite(), nom2.getId(),
-                            score
-                    );
-                    doublonsFormates.add(ligne);
-                }
+    for (int i = 0; i < liste.size(); i++) {
+        Nom nom1 = liste.get(i);
+        for (int j = i + 1; j < liste.size(); j++) {
+            Nom nom2 = liste.get(j);
+            double score = comparateur.comparer(nom1, nom2);
+            if (score >= 0.9) {
+                doublons.add(new CoupleDeNoms(nom1, nom2));
             }
         }
-
-        return doublonsFormates;
     }
+
+    return doublons;
+}
+
 }
