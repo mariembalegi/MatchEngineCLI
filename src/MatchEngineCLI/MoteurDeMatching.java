@@ -34,21 +34,21 @@ public class MoteurDeMatching {
         }
         return res;
     }
-
-
+    
     public List<CoupleAvecScore> comparerListes(List<Nom> liste1, List<Nom> liste2) {
-        List<CoupleDeNoms> candidats = generateur.generer(liste1, liste2);
-        List<CoupleAvecScore> resultats = new ArrayList<>();
+    List<CoupleAvecScore> correspondances = new ArrayList<>();
 
-        for (CoupleDeNoms couple : candidats) {
-            double score = comparateur.comparer(couple.nom1(), couple.nom2());
-            resultats.add(new CoupleAvecScore(couple.nom1(), couple.nom2(), score));
+    for (Nom nom : liste1) {
+        List<Nom> similaires = rechercher(nom, liste2);
+        for (Nom sim : similaires) {
+            double score = comparateur.comparer(nom, sim);
+            correspondances.add(new CoupleAvecScore(nom, sim, score));
         }
-
-        return selectionneur.selectionner(resultats);
     }
 
-    
+    return correspondances;
+}
+
     public List<String> dedupliquerListeFormatee(List<Nom> liste) {
         List<String> doublonsFormates = new ArrayList<>();
 
