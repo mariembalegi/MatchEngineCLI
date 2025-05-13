@@ -10,8 +10,8 @@ public class SelectionneurParSeuil implements Selectionneur {
     }
     
     @Override
-    public List<CoupleDeNoms> selectionner(List<CoupleAvecScore> resultatsAvecScore) {
-        List<CoupleDeNoms> resultat = new ArrayList<>();
+    public List<CoupleAvecScore> selectionner(List<CoupleAvecScore> resultatsAvecScore) {
+         List<CoupleAvecScore> resultat = new ArrayList<>();
         for (CoupleAvecScore couple : resultatsAvecScore) {
             if (couple.score() >= seuil) {
                 resultat.add(new CoupleDeNoms(couple.nom1(), couple.nom2()));
