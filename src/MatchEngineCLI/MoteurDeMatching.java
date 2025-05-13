@@ -58,7 +58,7 @@ public class MoteurDeMatching {
         Nom nom2 = couple.nom2();
         double score = couple.score();
 
-        if (!nom1.id().equals(nom2.id()) && nom1.id().compareTo(nom2.id()) < 0 && score >= 0.9) {
+        if (!nom1.getId().equals(nom2.getId()) && score >= 0.9) {
             doublons.add(new CoupleDeNoms(nom1, nom2));
         }
     }

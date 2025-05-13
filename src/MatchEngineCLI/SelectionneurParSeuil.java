@@ -14,7 +14,7 @@ public class SelectionneurParSeuil implements Selectionneur {
          List<CoupleAvecScore> resultat = new ArrayList<>();
         for (CoupleAvecScore couple : resultatsAvecScore) {
             if (couple.score() >= seuil) {
-                resultat.add(couple);
+                resultat.add(new CoupleAvecScore(couple.nom1(), couple.nom2(), couple.score()));
             }
         }
         return resultat;
