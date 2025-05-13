@@ -1,46 +1,31 @@
 package MatchEngineCLI;
 
-
-import java.io.BufferedReader;
-import java.io.FileReader;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
+
 
 public class CSVRecuperateur implements Recuperateur {
-    private final String filePath;
-    private final List<Pretraiteur> pretraiteurs;
+    private String filePath;
 
-    public CSVRecuperateur(String filePath, List<Pretraiteur> pretraiteurs) {
+    public CSVRecuperateur(String filePath) {
         this.filePath = filePath;
-        this.pretraiteurs = pretraiteurs != null ? pretraiteurs : new ArrayList<>();
     }
-
     @Override
     public List<Nom> recuperer() {
-        List<Nom> result = new ArrayList<>();
-        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                String[] parts = line.split(",");
-                if (parts.length >= 2) {
-                    String id = parts[0];
-                    String nomNonTraite = parts[1];
-                    List<Nom> nomTraite = new ArrayList<>();
-                    List<Nom> currentNoms = List.of(new Nom(id, nomNonTraite, List.of()));
-                    for (Pretraiteur pretraiteur : pretraiteurs) {
-                        List<Nom> nextNoms = new ArrayList<>();
-                        for (Nom nom : currentNoms) {
-                            nextNoms.addAll(pretraiteur.pretraiter(nom.nomNonTraite()));
-                        }
-                        currentNoms = nextNoms;
-                    }
-                    nomTraite = currentNoms;
-                    result.add(new Nom(id, nomNonTraite, nomTraite));
-                }
-            }
-        } catch (Exception e) {
+        try (Stream<String> lines = Files.lines(Paths.get(filePath))) {
+            return lines.skip(1) // Skip the header line
+                    .map(line -> line.split(","))
+                    .filter(values -> values.length >= 2)
+                    .map(values -> new Nom(values[0].trim(), values[1].trim(),new ArrayList<>()))
+                    .toList();
+        } catch (IOException e) {
             e.printStackTrace();
+            return List.of();
         }
-        return result;
     }
+
 }

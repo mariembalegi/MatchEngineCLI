@@ -5,12 +5,12 @@ import java.util.List;
 
 public class Normalisation implements Pretraiteur {
     @Override
-    public List<Nom> pretraiter(String nom) {
+    public List<String> pretraiter(String nom) {
         String nomTraite = Normalizer.normalize(nom, Normalizer.Form.NFD)
                 .replaceAll("[\\p{M}]", "")
                 .toLowerCase()
                 .replaceAll("[^a-z]", "");
 
-        return List.of(new Nom("1", nomTraite, List.of()));
+        return List.of(new Stirng("1", nomTraite, List.of()));
     }
 }
