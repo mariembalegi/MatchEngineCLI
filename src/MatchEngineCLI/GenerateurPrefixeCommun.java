@@ -9,7 +9,7 @@ public class GenerateurPrefixeCommun implements GenerateurCandidats {
 
     @Override
     public List<CoupleDeNoms> generer(List<Nom> liste1, List<Nom> liste2) {
-        // 1. Pré-calcul: construire une Map (préfixe -> liste de noms correspondants dans liste2)
+        
         Map<String, List<Nom>> prefixeANoms = new HashMap<>();
         for (Nom nom : liste2) {
             String str = nom.toString();
@@ -18,7 +18,7 @@ public class GenerateurPrefixeCommun implements GenerateurCandidats {
             prefixeANoms.computeIfAbsent(prefixe, k -> new ArrayList<>()).add(nom);
         }
 
-        // 2. Générer les couples en utilisant la Map
+        
         List<CoupleDeNoms> couples = new ArrayList<>();
         for (Nom nom1 : liste1) {
             String str1 = nom1.toString();
