@@ -10,7 +10,6 @@ public class Normalisation implements Pretraiteur {
                 .replaceAll("[\\p{M}]", "")
                 .toLowerCase()
                 .replaceAll("[^a-z]", "");
-
-        return List.of(new Stirng("1", nomTraite, List.of()));
+        return List.of(nomTraite);
     }
 }
