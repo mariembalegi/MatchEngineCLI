@@ -50,20 +50,21 @@ public class MoteurDeMatching {
 }
 
     public List<CoupleDeNoms> dedupliquerListe(List<Nom> liste) {
+    List<CoupleAvecScore> correspondances = comparerListes(liste, liste);
     List<CoupleDeNoms> doublons = new ArrayList<>();
 
-    for (int i = 0; i < liste.size(); i++) {
-        Nom nom1 = liste.get(i);
-        for (int j = i + 1; j < liste.size(); j++) {
-            Nom nom2 = liste.get(j);
-            double score = comparateur.comparer(nom1, nom2);
-            if (score >= 0.9) {
-                doublons.add(new CoupleDeNoms(nom1, nom2));
-            }
+    for (CoupleAvecScore couple : correspondances) {
+        Nom nom1 = couple.nom1();
+        Nom nom2 = couple.nom2();
+        double score = couple.score();
+
+        if (!nom1.getId().equals(nom2.getId()) && score >= 0.9) {
+            doublons.add(new CoupleDeNoms(nom1, nom2));
         }
     }
 
     return doublons;
 }
+
 
 }
