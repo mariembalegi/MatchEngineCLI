@@ -192,7 +192,7 @@ public class Main {
     }
     static void choixComparateurNomsOriginalLevenshtein()() {
         
-        moteur.setComparateur(newComparateurNomsOriginalLevenshtein());
+        moteur.setComparateur(new ComparateurNomsOriginalLevenshtein());
 
     }
     static void  choixComparateurNomsTraiteExacte() {
