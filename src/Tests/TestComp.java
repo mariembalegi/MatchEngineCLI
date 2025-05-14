@@ -13,26 +13,11 @@ public class TestComp {
         ComparateurNomsTraiteLevenshtein comparateur = new ComparateurNomsTraiteLevenshtein();
         ComparateurNomsOriginalExacte comparateur5 = new ComparateurNomsOriginalExacte();
         ComparateurNomsTraiteExacte comparateur6 = new ComparateurNomsTraiteExacte();
-        // Création de l'instance du prétraiteur
-    /*    PretraiteurNormalisation pretraiteur1 = new PretraiteurNormalisation();
-        PretraiteurDecomposeur pretraiteur = new PretraiteurDecomposeur();
-        PretraiteurMetaphone pretraiteur3 = new PretraiteurMetaphone();
-        PretraiteurSoundex pretraiteur4 = new PretraiteurSoundex();
 
-     */
         RecuperateurCSV recuperateur = new RecuperateurCSV("C:\\Users\\khals_\\OneDrive\\Bureau\\names_matching_peps\\peps_names_658k.csv");
         List<Nom> noms = recuperateur.recuperer();
 
-/*        // Exécution des tests du prétraiteur
-        System.out.println("Tests du Pretraiteur :");
-        System.out.println("---------------------------------------------");
-        for (int i = 0; i < noms.size(); i++) {
-            String input = noms.get(i).toString();
-            List<String> result = pretraiteur.pretraiter(input);
-            System.out.printf("Test %2d: Input: '%s' -> Output: %s%n",
-                    i + 1, input, result);
-        }
-*/
+
         // Exécution des tests du comparateur
         System.out.println("Tests du Comparateur :");
         System.out.println("---------------------------------------------");
