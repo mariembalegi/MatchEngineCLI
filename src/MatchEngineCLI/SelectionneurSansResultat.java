@@ -5,13 +5,12 @@ import java.util.List;
 public class SelectionneurSansResultat implements Selectionneur {
 
     @Override
-    public List<CoupleDeNoms> selectionner(List<CoupleAvecScore> resultatsAvecScore) {
-        List<CoupleDeNoms> resultats = new ArrayList<>();
+    public List<CoupleAvecScore> selectionner(List<CoupleAvecScore> resultatsAvecScore) {
+        List<CoupleAvecScore> resultats = new ArrayList<>();
         
-        for (CoupleAvecScore couple : resultatsAvecScore) {
-            resultats.add(new CoupleDeNoms(couple.nom1(), couple.nom2()));
+        for (CoupleAvecScore coupleAvecScore : resultatsAvecScore) {
+            resultats.add(new CoupleAvecScore(coupleAvecScore.nom1(), coupleAvecScore.nom2(),coupleAvecScore.score()));
         }
-        
         return resultats;
     }
 }
