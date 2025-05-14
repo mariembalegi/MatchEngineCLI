@@ -18,53 +18,65 @@ public class MoteurDeMatching {
     }
 
 
-    public List<Nom> rechercher(Nom nomRecherche, List<Nom> listeNoms) {
-        List<CoupleDeNoms> candidats = generateur.generer(List.of(nomRecherche), listeNoms);
-        List<CoupleAvecScore> resultatsAvecScore = new ArrayList<>();
+    public List<NomAvecScore> rechercher(Nom nomRecherche, List<Nom> listeNoms) {
+        //Pretraitement Liste
+        for (Nom nom : listeNoms) {
+            List<String> nomsATraiter = nom.getNomTraite();
+            for (Pretraiteur pretraiteur : pretraiteurs) {
+                List<String> nomsApresPretraitement = new ArrayList<>();
+                for (String nomStr : nomsATraiter) {
+                    nomsApresPretraitement.addAll(pretraiteur.pretraiter(nomStr));
+                }
+                nomsATraiter = nomsApresPretraitement;
+            }
+            nom.setNomTraite(nomsATraiter);
+        }
+        //Pretraitement nomRecherche
+        List<String> nomAtraiter = nomRecherche.getNomTraite();
+        for(Pretraiteur pretraiteur : pretraiteurs) {
+            List<String> nomsAPresPretraitement = new ArrayList<>();
+            for (String nomStr : nomAtraiter) {
+                nomsAPresPretraitement.addAll(pretraiteur.pretraiter(nomStr));
+            }
+            nomAtraiter = nomsAPresPretraitement;
+        }
+        nomRecherche.setNomTraite(nomAtraiter);
 
+        //generer les candidats
+        List<CoupleDeNoms> candidats = generateur.generer(List.of(nomRecherche), listeNoms);
+
+        // comparaison
+        List<CoupleAvecScore> resultatsAvecScore = new ArrayList<>();
         for (CoupleDeNoms couple : candidats) {
             double score = comparateur.comparer(couple.nom1(), couple.nom2());
             resultatsAvecScore.add(new CoupleAvecScore(couple.nom1(), couple.nom2(), score));
         }
 
-        List<CoupleAvecScore> selectionnes = selectionneur.selectionner(resultatsAvecScore);
-        List<Nom> res = new ArrayList<>();
-        for (CoupleAvecScore c : selectionnes) {
-            res.add(c.nom2());
+        //Selectionner
+        List<CoupleAvecScore> listeApresSelectionneur = selectionneur.selectionner(resultatsAvecScore);
+        //retour liste(nom,score)
+        List<NomAvecScore> res = new ArrayList<>();
+        for (CoupleAvecScore c : listeApresSelectionneur) {
+            res.add(new NomAvecScore(c.nom2(),c.score()));
         }
         return res;
     }
-    
+
+
     public List<CoupleAvecScore> comparerListes(List<Nom> liste1, List<Nom> liste2) {
     List<CoupleAvecScore> correspondances = new ArrayList<>();
-
     for (Nom nom : liste1) {
-        List<Nom> similaires = rechercher(nom, liste2);
-        for (Nom sim : similaires) {
-            double score = comparateur.comparer(nom, sim);
-            correspondances.add(new CoupleAvecScore(nom, sim, score));
+        List<NomAvecScore> similaires = rechercher(nom, liste2);
+        for (NomAvecScore sim : similaires) {
+            correspondances.add(new CoupleAvecScore(nom, sim.nom(), sim.score()));
         }
     }
-
     return correspondances;
 }
 
-    public List<CoupleDeNoms> dedupliquerListe(List<Nom> liste) {
-    List<CoupleAvecScore> correspondances = comparerListes(liste, liste);
-    List<CoupleDeNoms> doublons = new ArrayList<>();
-
-    for (CoupleAvecScore couple : correspondances) {
-        Nom nom1 = couple.nom1();
-        Nom nom2 = couple.nom2();
-        double score = couple.score();
-
-        if  (!nom1.id().equals(nom2.id()) && nom1.id().compareTo(nom2.id()) < 0 && score >= 0.9) {
-            doublons.add(new CoupleDeNoms(nom1, nom2));
-        }
+    public List<CoupleAvecScore> dedupliquerListe(List<Nom> liste) {
+        return comparerListes(liste, liste);
     }
-
-    return doublons;
-}
 
 
 }
