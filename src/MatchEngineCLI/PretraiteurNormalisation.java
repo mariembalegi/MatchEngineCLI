@@ -9,7 +9,7 @@ public class PretraiteurNormalisation implements Pretraiteur {
         String nomTraite = Normalizer.normalize(nom, Normalizer.Form.NFD)
                 .replaceAll("[\\p{M}]", "")
                 .toLowerCase()
-                .replaceAll("[^a-z]", "");
+                .replaceAll("[^a-z ]", "");
         return List.of(nomTraite);
     }
 }
