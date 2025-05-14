@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class GenerateurTailleNomsTraite implements GenerateurCandidats {
-    private static final int DIFFERENCE_MAX = 1;
+    private static final int DIFFERENCE_MAX = 2;
 
     public List<CoupleDeNoms> generer(List<Nom> liste1, List<Nom> liste2) {
         List<CoupleDeNoms> couples = new ArrayList<>();

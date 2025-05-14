@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-        Pretraiteur pretraiteur = new PretraiteurPhonetique() ;
+        Pretraiteur pretraiteur = new PretraiteurMetaphone() ;
         Pretraiteur pretraiteur2 = new PretraiteurNormalisation();
         String nom = "á€¦á€¸á€±á€žá€¬á€„á€¹á€¸";
         List<String> phonetiques = pretraiteur.pretraiter(nom);
