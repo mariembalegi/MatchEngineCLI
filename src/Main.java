@@ -374,7 +374,8 @@ public class Main {
 
 
             System.out.printf("Nom: %s (Score: %.2f)%n",
-                    ns.nom2(),
+                    ns.nom2().getId();
+                    ns.nom2();
                     ns.score());
         }
 
