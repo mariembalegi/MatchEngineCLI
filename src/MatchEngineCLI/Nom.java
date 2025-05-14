@@ -40,4 +40,9 @@ public class Nom {
     public void setNomTraite(List<String> nomTraite) {
         this.nomTraite = nomTraite;
     }
+
+    @Override
+    public String toString() {
+        return this.nomNonTraite;
+    }
 }

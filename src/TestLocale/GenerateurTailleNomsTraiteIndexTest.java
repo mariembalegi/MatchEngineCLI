@@ -13,11 +13,11 @@ public class GenerateurTailleNomsTraiteIndexTest {
     @Test
     public void testGenerer() {
         // Créer des noms avec différentes tailles de nomTraite
-        Nom nom1 = new Nom("1", "Alice", Arrays.asList("a", "li", "ce"));
-        Nom nom2 = new Nom("2", "Bob", Arrays.asList("b", "ob"));
-        Nom nom3 = new Nom("3", "Charlie", Arrays.asList("ch", "ar", "li", "e","4","jh"));
-        Nom nom4 = new Nom("4", "Dan", Arrays.asList("d", "an"));
-        Nom nom5 = new Nom("5", "Eve", Arrays.asList("ev"));
+        Nom nom1 = new Nom("1", "Alice");
+        Nom nom2 = new Nom("2", "Bob");
+        Nom nom3 = new Nom("3", "Charlie");
+        Nom nom4 = new Nom("4", "Dan");
+        Nom nom5 = new Nom("5", "Eve");
 
         List<Nom> liste1 = Arrays.asList(nom1, nom2);  // Alice (3), Bob (2)
         List<Nom> liste2 = Arrays.asList(nom3, nom4, nom5); // Charlie (6), Dan (2), Eve (1)

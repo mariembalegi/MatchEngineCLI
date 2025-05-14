@@ -11,14 +11,14 @@ public class GenerateurTailleNomTraiteTest {
 
         List<Nom> liste1 = new ArrayList<>();
 
-        liste1.add(new Nom("1", "Alice", List.of("A", "Al")));
+        liste1.add(new Nom("1", "Alice"));
 
-        liste1.add(new Nom("2", "Bob", List.of("B", "Bo", "Bob")));
+        liste1.add(new Nom("2", "Bob"));
 
         List<Nom> liste2 = new ArrayList<>();
-        liste2.add(new Nom("3", "Xavier", List.of("X", "Xa", "Xav", "Xavier", "Xavi")));
+        liste2.add(new Nom("3", "Xavier"));
 
-        liste2.add(new Nom("4", "Yas", List.of()));
+        liste2.add(new Nom("4", "Yas"));
 
 
         GenerateurCandidats generateur = new GenerateurTailleNomsTraite();

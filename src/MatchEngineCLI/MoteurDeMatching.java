@@ -8,15 +8,8 @@ public class MoteurDeMatching {
     private Comparateur comparateur;
     private Selectionneur selectionneur;
     private GenerateurCandidats generateur;
-
-    public MoteurDeMatching(List<Pretraiteur> pretraiteurs, Comparateur comparateur,
-                            Selectionneur selectionneur, GenerateurCandidats generateur) {
-        this.pretraiteurs = pretraiteurs;
-        this.comparateur = comparateur;
-        this.selectionneur = selectionneur;
-        this.generateur = generateur;
-    }
-
+    private double seuil = 0.6;
+    private int nbMax = 10;
 
     public List<NomAvecScore> rechercher(Nom nomRecherche, List<Nom> listeNoms) {
         //Pretraitement Liste
@@ -31,16 +24,20 @@ public class MoteurDeMatching {
             }
             nom.setNomTraite(nomsATraiter);
         }
+
         //Pretraitement nomRecherche
         List<String> nomAtraiter = nomRecherche.getNomTraite();
-        for(Pretraiteur pretraiteur : pretraiteurs) {
+        for (Pretraiteur pretraiteur : pretraiteurs) {
             List<String> nomsAPresPretraitement = new ArrayList<>();
             for (String nomStr : nomAtraiter) {
                 nomsAPresPretraitement.addAll(pretraiteur.pretraiter(nomStr));
             }
             nomAtraiter = nomsAPresPretraitement;
         }
+
         nomRecherche.setNomTraite(nomAtraiter);
+
+        nomAtraiter.forEach(System.out::println);
 
         //generer les candidats
         List<CoupleDeNoms> candidats = generateur.generer(List.of(nomRecherche), listeNoms);
@@ -57,40 +54,67 @@ public class MoteurDeMatching {
         //retour liste(nom,score)
         List<NomAvecScore> res = new ArrayList<>();
         for (CoupleAvecScore c : listeApresSelectionneur) {
-            res.add(new NomAvecScore(c.nom2(),c.score()));
+            res.add(new NomAvecScore(c.nom2(), c.score()));
         }
         return res;
     }
 
-
     public List<CoupleAvecScore> comparerListes(List<Nom> liste1, List<Nom> liste2) {
-    List<CoupleAvecScore> correspondances = new ArrayList<>();
-    for (Nom nom : liste1) {
-        List<NomAvecScore> similaires = rechercher(nom, liste2);
-        for (NomAvecScore sim : similaires) {
-            correspondances.add(new CoupleAvecScore(nom, sim.nom(), sim.score()));
+        List<CoupleAvecScore> correspondances = new ArrayList<>();
+        for (Nom nom : liste1) {
+            List<NomAvecScore> similaires = rechercher(nom, liste2);
+            for (NomAvecScore sim : similaires) {
+                correspondances.add(new CoupleAvecScore(nom, sim.nom(), sim.score()));
+            }
         }
+        return correspondances;
     }
-    return correspondances;
-}
 
     public List<CoupleAvecScore> dedupliquerListe(List<Nom> liste) {
         return comparerListes(liste, liste);
     }
+
     public void setGenerateurCandidats(GenerateurCandidats generateurCandidats) {
         this.generateur = generateurCandidats;
     }
+
     public List<Pretraiteur> getPretraiteur() {
         return pretraiteurs;
     }
-    public void setSelectionneur(Selectionneur selectionneur) {
-        this.selectionneur = selectionneur;
-    }
+
     public Selectionneur getSelectionneur() {
         return selectionneur;
     }
+
+    public void setSelectionneur(Selectionneur selectionneur) {
+        this.selectionneur = selectionneur;
+    }
+
     public void setComparateur(Comparateur comparateurNoms) {
         this.comparateur = comparateurNoms;
     }
 
+    public double getSeuil() {
+        return seuil;
+    }
+
+    public int getNbMax() {
+        return nbMax;
+    }
+
+    public void setSeuil(double seuil) {
+        this.seuil = seuil;
+    }
+
+    public void setNbMax(int nbMax) {
+        this.nbMax = nbMax;
+    }
+
+    public List<Pretraiteur> getPretraiteurs() {
+        return pretraiteurs;
+    }
+
+    public void setPretraiteurs(List<Pretraiteur> pretraiteurs) {
+        this.pretraiteurs = pretraiteurs;
+    }
 }

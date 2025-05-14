@@ -12,12 +12,12 @@ public class GenerateurTousCouplesTest{
     public static void main(String[] args) {
         // Création des listes de noms
         List<Nom> liste1 = new ArrayList<>();
-        liste1.add(new Nom("1", "Alice", List.of("A", "Al", "Ali", "Alice")));
-        liste1.add(new Nom("2", "Bob", List.of("B", "Bo", "Bob")));
+        liste1.add(new Nom("1", "Alice"));
+        liste1.add(new Nom("2", "Bob"));
 
         List<Nom> liste2 = new ArrayList<>();
-        liste2.add(new Nom("3", "Xavier", List.of("X", "Xa", "Xav", "Xavier")));
-        liste2.add(new Nom("4", "Yasmine", List.of("Y", "Ya", "Yas", "Yasmine")));
+        liste2.add(new Nom("3", "Xavier"));
+        liste2.add(new Nom("4", "Yasmine"));
 
         // Instanciation du générateur
         GenerateurCandidats generateur = new GenerateurTousCouples();

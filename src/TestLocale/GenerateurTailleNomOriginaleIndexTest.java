@@ -15,12 +15,12 @@ class GenerateurTailleNomOriginaleIndexTest {
     void testGenerer() {
         GenerateurTailleNomsOriginaleIndex generateur = new GenerateurTailleNomsOriginaleIndex();
 
-        Nom nom1 = new Nom("1", "Anna", null);     // taille = 4
-        Nom nom2 = new Nom("2", "Luc", null);      // taille = 3
-        Nom nom3 = new Nom("3", "Émilie", null);   // taille = 6
-        Nom nom4 = new Nom("4", "Bob", null);      // taille = 3
-        Nom nom5 = new Nom("5", "Pauline", null);  // taille = 7
-        Nom nom6 = new Nom("6", "Zoe", null);      // taille = 3
+        Nom nom1 = new Nom("1", "Anna");     // taille = 4
+        Nom nom2 = new Nom("2", "Luc");      // taille = 3
+        Nom nom3 = new Nom("3", "Émilie");   // taille = 6
+        Nom nom4 = new Nom("4", "Bob");      // taille = 3
+        Nom nom5 = new Nom("5", "Pauline");  // taille = 7
+        Nom nom6 = new Nom("6", "Zoe");      // taille = 3
 
         List<Nom> liste1 = Arrays.asList(nom1, nom2); // Anna, Luc
         List<Nom> liste2 = Arrays.asList(nom3, nom4, nom5, nom6); // Émilie, Bob, Pauline, Zoe

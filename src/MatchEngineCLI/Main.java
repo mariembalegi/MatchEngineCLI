@@ -1,25 +1,35 @@
 package MatchEngineCLI;
 
-import java.io.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
 public class Main {
     static MoteurDeMatching moteur = new MoteurDeMatching();
-
-    static Recuperateur recuperateur = new RecuperateurCSV("C:\\Users\\khals_\\OneDrive\\Bureau\\names_matching_peps\\peps_names_2k.csv");
-    static  Scanner scanner = new Scanner(System.in);
+    static Recuperateur recuperateur;
+    static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
 
+        System.out.println("Enter l'emplacement de fichier source :");
+        String emplacement = "C:\\Users\\mariem\\Downloads\\peps_names_100.csv";
 
+        recuperateur = new RecuperateurCSV(emplacement);
 
-        // TODO Auto-generated method stub
+        // SET DEFAULT CONFIG FOR ENGINE
+        List<Pretraiteur> pretraiteurs = new ArrayList<>();
+        pretraiteurs.add(new PretraiteurNormalisation());
+        pretraiteurs.add(new PretraiteurDecomposeur());
 
-        //D:/Desktop/listesNoms/peps_names_658k.csv
+        moteur.setComparateur(new ComparateurNomsOriginalExacte());
+        moteur.setSelectionneur(new SelectionneurNMeilleursSort(10));
+        moteur.setPretraiteurs(pretraiteurs);
+        moteur.setGenerateurCandidats(new GenerateurTailleNomsOriginaleIndex());
+        moteur.setSeuil(0.6);
+        moteur.setNbMax(10);
 
         while (true) {
             afficherMenuPrincipal();
-
-
             String choix = scanner.nextLine();
 
             switch (choix) {
@@ -39,6 +49,7 @@ public class Main {
         }
 
     }
+
     static void afficherMenuPrincipal() {
         System.out.println("\n===== MENU PRINCIPAL =====\n");
         System.out.println("1. Effectuer une recherche\n");
@@ -80,8 +91,8 @@ public class Main {
         }
 
 
-
     }
+
     static void afficherMenuGenerateurDeCandidats() {
 
         System.out.println("\n===== MENU GENERATEUR DE CANDIDATS =====");
@@ -97,26 +108,23 @@ public class Main {
 
     static void choixGenerateurDeCandidats() {
 
-        while(true) {
+        while (true) {
             afficherMenuGenerateurDeCandidats();
             String choix = scanner.nextLine();
             switch (choix) {
                 case "1" -> generateurTous();
                 case "2" -> generateurAvecPrefix();
-                case "3" -> generateurParTailleOriginale ();
-                case "4" -> generateurParTailleTraite ();
+                case "3" -> generateurParTailleOriginale();
+                case "4" -> generateurParTailleTraite();
                 case "5" -> generateurParTailleOriginaleIndex();
                 case "6" -> generateurParTailleTraiteIndex();
-                case "5" -> {
-
-                    return;
-                }
                 default -> System.out.println("\nChoix invalide.");
             }
         }
 
 
     }
+
     static void generateurAvecPrefix() {
         moteur.setGenerateurCandidats(new GenerateurPrefixeCommun());
     }
@@ -125,10 +133,12 @@ public class Main {
         moteur.setGenerateurCandidats(new GenerateurTousCouples());
 
     }
+
     static void generateurParTailleOriginale() {
 
         moteur.setGenerateurCandidats(new GenerateurTailleNomsOriginale());
     }
+
     static void generateurParTailleTraite() {
 
         moteur.setGenerateurCandidats(new GenerateurTailleNomsTraite());
@@ -139,12 +149,10 @@ public class Main {
 
         moteur.setGenerateurCandidats(new GenerateurTailleNomsOriginaleIndex());
     }
-    static void generateurParTailleTraiteIndex() {
 
+    static void generateurParTailleTraiteIndex() {
         moteur.setGenerateurCandidats(new GenerateurTailleNomsTraiteIndex());
     }
-
-
 
     static void afficherMenuComparateur() {
         // TODO
@@ -153,8 +161,8 @@ public class Main {
         System.out.println("2. Choisir Comparateur Noms Original JaroWinkler\r\n");
         System.out.println("3. choisir Comparateur Noms Original Levenshtein\n");
         System.out.println("4. choisir Comparateur Noms Traite Exacte \n");
-	System.out.println("5. choisir Comparateur Noms Traite JaroWinkler \n");
-	System.out.println("6. choisir Comparateur Noms Traite Levenshtein \n");
+        System.out.println("5. choisir Comparateur Noms Traite JaroWinkler \n");
+        System.out.println("6. choisir Comparateur Noms Traite Levenshtein \n");
         System.out.println("7. Quitter");
         System.out.print("Votre choix : ");
     }
@@ -162,16 +170,16 @@ public class Main {
     static void choixComparateur() {
 
 
-        while(true) {
+        while (true) {
             afficherMenuComparateur();
             String choix = scanner.nextLine();
             switch (choix) {
                 case "1" -> choixComparateurNomsOriginalExacte();
                 case "2" -> choixComparateurNomsOriginalJaroWinkler();
-                case "3" -> choixComparateurNomsOriginalLevenshtein() ;
+                case "3" -> choixComparateurNomsOriginalLevenshtein();
                 case "4" -> choixComparateurNomsTraiteExacte();
-		case "5" -> choixComparateurNomsTraiteJaroWinkler();
-		case "6" -> choixComparateurNomsTraiteLevenshtein();	    
+                case "5" -> choixComparateurNomsTraiteJaroWinkler();
+                case "6" -> choixComparateurNomsTraiteLevenshtein();
                 case "7" -> {
 
                     return;
@@ -182,34 +190,37 @@ public class Main {
 
 
     }
+
     static void choixComparateurNomsOriginalExacte() {
-        moteur.setComparateur(new  ComparateurNomsOriginalExacte());
+        moteur.setComparateur(new ComparateurNomsOriginalExacte());
 
     }
+
     static void choixComparateurNomsOriginalJaroWinkler() {
         moteur.setComparateur(new ComparateurNomsOriginalJaroWinkler());
 
     }
-    static void choixComparateurNomsOriginalLevenshtein()() {
-        
+
+    static void choixComparateurNomsOriginalLevenshtein() {
+
         moteur.setComparateur(new ComparateurNomsOriginalLevenshtein());
 
     }
-    static void  choixComparateurNomsTraiteExacte() {
-        moteur.setComparateur(new ComparateurNomsTraiteExacte ());
+
+    static void choixComparateurNomsTraiteExacte() {
+        moteur.setComparateur(new ComparateurNomsTraiteExacte());
 
     }
-    static void  choixComparateurNomsTraiteJaroWinkler() {
+
+    static void choixComparateurNomsTraiteJaroWinkler() {
         moteur.setComparateur(new ComparateurNomsTraiteJaroWinkler());
 
     }
+
     static void choixComparateurNomsTraiteLevenshtein() {
         moteur.setComparateur(new ComparateurNomsTraiteLevenshtein());
 
     }
-
-
-
 
 
     static void afficheMenuPretraiteur() {
@@ -222,6 +233,7 @@ public class Main {
         System.out.print("Votre choix : ");
 
     }
+
     static void choixPretraiteurs() {
         while (true) {
             afficheMenuPretraiteur();
@@ -232,7 +244,7 @@ public class Main {
                 case "2" -> PretraiteurDecomposeur();
                 case "3" -> PretraiteurSoundex();
                 case "4" -> PretraiteurMetaphone();
-                case "5" ->{
+                case "5" -> {
                     return;
                 }
                 default -> System.out.println("Choix invalide.");
@@ -242,7 +254,7 @@ public class Main {
 
     static void PretraiteurNormalisation() {
         for (Pretraiteur p : moteur.getPretraiteur()) {
-            if (p instanceof  PretraiteurNormalisation()) {
+            if (p instanceof PretraiteurNormalisation) {
                 System.out.println("ce pretraiteur exist deja!!");
                 return;
             }
@@ -252,9 +264,9 @@ public class Main {
 
     }
 
-    static void PretraiteurDecomposeur(){
+    static void PretraiteurDecomposeur() {
         for (Pretraiteur p : moteur.getPretraiteur()) {
-            if (p instanceof  PretraiteurDecomposeur) {
+            if (p instanceof PretraiteurDecomposeur) {
                 System.out.println("ce pretraiteur exist deja!!");
                 return;
             }
@@ -263,9 +275,10 @@ public class Main {
         moteur.getPretraiteur().add(new PretraiteurDecomposeur());
 
     }
+
     static void PretraiteurSoundex() {
         for (Pretraiteur p : moteur.getPretraiteur()) {
-            if (p instanceof  PretraiteurSoundex)  {
+            if (p instanceof PretraiteurSoundex) {
                 System.out.println("ce pretraiteur exist deja!!");
                 return;
             }
@@ -273,9 +286,10 @@ public class Main {
         moteur.getPretraiteur().add(new PretraiteurSoundex());
 
     }
+
     static void PretraiteurMetaphone() {
         for (Pretraiteur p : moteur.getPretraiteur()) {
-            if (p instanceof  PretraiteurMetaphone)  {
+            if (p instanceof PretraiteurMetaphone) {
                 System.out.println("ce pretraiteur exist deja!!");
                 return;
             }
@@ -283,7 +297,6 @@ public class Main {
         moteur.getPretraiteur().add(new PretraiteurMetaphone());
 
     }
-
 
 
     static void afficheMenuSelectionneur() {
@@ -318,9 +331,9 @@ public class Main {
 
     static void SelectionneurSansLesResultats() {
         moteur.setSelectionneur(new SelectionneurSansResultat());
-
     }
-    static void SelectionneurAvecSeuil() {
+
+    static void SelectionneurParSeuil() {
 
         System.out.println("donner le seuil :");
         String saisie = scanner.nextLine().trim().replace(',', '.');
@@ -334,6 +347,7 @@ public class Main {
         }
 
     }
+
     static void SelectionneurNMeilleursmax() {
         System.out.println("Entrez le nombre de resultats a selectionner : ");
         int n = scanner.nextInt();
@@ -341,6 +355,7 @@ public class Main {
         moteur.setSelectionneur(new SelectionneurNMeilleursMax(n));
 
     }
+
     static void SelectionneurNMeilleurssort() {
         System.out.println("Entrez le nombre de resultats a selectionner : ");
         int n = scanner.nextInt();
@@ -349,12 +364,14 @@ public class Main {
 
     }
 
-    static void effectuerRecherche()  {
+    static void effectuerRecherche() {
         System.out.print("Entrez le nom à rechercher : ");
         String nomOriginal = scanner.nextLine();
 
-        Nom nom = new Nom("-1",nomOriginal);
+        Nom nom = new Nom("-1", nomOriginal);
         List<Nom> listeOriginale = recuperateur.recuperer();
+
+        System.out.println(listeOriginale.size());
         long start = System.currentTimeMillis();
 
 
@@ -364,22 +381,17 @@ public class Main {
         }
 
 
-
-        List<CoupleDeNoms> resultats = moteur.rechercher(nom, listeOriginale);
+        List<NomAvecScore> resultats = moteur.rechercher(nom, listeOriginale);
         long end = System.currentTimeMillis();
 
         System.out.println("\nRésultats pour : " + nom.getNomNonTraite());
-        for (CoupleAvecScore ns : resultats) {
-
-
-
+        for (NomAvecScore ns : resultats) {
             System.out.printf("Nom: %s (Score: %.2f)%n",
-                    ns.nom2(),
+                    ns.nom(),
                     ns.score());
         }
 
         System.out.println("Execution time: " + (end - start) + " ms");
-
 
 
     }
@@ -387,7 +399,7 @@ public class Main {
     static void comparerDeuxListes() {
         // TODO
 
-        List<Nom> list1 =new ArrayList<Nom>();
+        List<Nom> list1 = new ArrayList<Nom>();
         list1 = recuperateur.recuperer();
         if (list1 == null || list1.isEmpty()) {
             System.out.println("Erreur : la liste 1  des candidats est vide ou n’a pas pu être chargée.");
@@ -395,7 +407,7 @@ public class Main {
         }
 
 
-        List<Nom> list2 =new ArrayList<Nom>();
+        List<Nom> list2 = new ArrayList<Nom>();
         list2 = recuperateur.recuperer();
         if (list2 == null || list2.isEmpty()) {
             System.out.println("Erreur : la liste 2 des candidats est vide ou n’a pas pu être chargée.");
@@ -407,14 +419,13 @@ public class Main {
         resultat = moteur.comparerListes(list1, list2);
 
 
-
         resultat = moteur.getSelectionneur().selectionner(resultat);
         long end = System.currentTimeMillis();
         if (resultat == null || resultat.isEmpty()) {
             System.out.println("Aucun résultat trouvé.");
             return;
         }
-        for(CoupleAvecScore couple : resultat) {
+        for (CoupleAvecScore couple : resultat) {
             System.out.println(couple);
 
 
