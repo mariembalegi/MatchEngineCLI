@@ -11,7 +11,7 @@ public class GenerateurTailleNomsOriginaleIndex implements GenerateurCandidats {
         Map<Integer, List<Nom>> map= new HashMap<>() ;
         // Parcourir list2 pour remplir la Map
         for (Nom nom : listeNoms2) {
-            int tailleNom = nom.nomNonTraite().length();
+            int tailleNom = nom.getNomNonTraite().length();
             // Vérifier si la clé existe, sinon initialiser une nouvelle liste
             map.putIfAbsent(tailleNom, new ArrayList<>());
             map.get(tailleNom).add(nom);
@@ -20,7 +20,7 @@ public class GenerateurTailleNomsOriginaleIndex implements GenerateurCandidats {
         List<CoupleDeNoms> couples = new ArrayList<>();
         // Parcourir chaque nom de list1
         for (Nom nom1 : listeNoms1) {
-            int tailleNom1 = nom1.nomTraite().size();
+            int tailleNom1 = nom1.getNomTraite().size();
             // Définir l'intervalle de tailles [taille-1, taille+1]
             for (int taille = Math.max(1, tailleNom1 - DIFFERENCE_MAX); taille <= tailleNom1 + DIFFERENCE_MAX; taille++) {
                 // Vérifier si la taille existe dans la Map

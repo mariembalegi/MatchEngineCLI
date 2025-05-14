@@ -3,8 +3,8 @@ package MatchEngineCLI;
 public class ComparateurNomsOriginalLevenshtein implements Comparateur {
     @Override
     public double comparer(Nom nom1, Nom nom2) {
-        String s1 = nom1.nomNonTraite();
-        String s2 = nom2.nomNonTraite();
+        String s1 = nom1.getNomNonTraite();
+        String s2 = nom2.getNomNonTraite();
         int len1 = s1.length();
         int len2 = s2.length();
         int[][] dp = new int[len1 + 1][len2 + 1];

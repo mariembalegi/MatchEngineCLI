@@ -5,8 +5,8 @@ import java.util.List;
 public class ComparateurNomsTraiteLevenshtein implements Comparateur {
     @Override
     public double comparer(Nom nom1, Nom nom2) {
-        List<String> list1 = nom1.nomTraite();
-        List<String> list2 = nom2.nomTraite();
+        List<String> list1 = nom1.getNomTraite();
+        List<String> list2 = nom2.getNomTraite();
         double total = 0.0;
         int count = 0;
 

@@ -6,7 +6,7 @@ public class ComparateurNomsTraiteExacte implements Comparateur {
         @Override
 
         public double comparer(Nom nom1, Nom nom2) {
-            List<String> mots1 = nom1.nomTraite(), mots2 = nom2.nomTraite();
+            List<String> mots1 = nom1.getNomTraite(), mots2 = nom2.getNomTraite();
             int intersect = 0;
             for (String mot : mots1)
                 if (mots2.contains(mot)) intersect++;

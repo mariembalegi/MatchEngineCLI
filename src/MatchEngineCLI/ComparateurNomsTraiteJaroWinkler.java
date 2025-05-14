@@ -7,8 +7,8 @@ public class ComparateurNomsTraiteJaroWinkler implements Comparateur {
     public double comparer(Nom nom1, Nom nom2) {
         double totalScore = 0;
         int count = 0;
-        for (String s1 : nom1.nomTraite()) {
-            for (String s2 : nom2.nomTraite()) {
+        for (String s1 : nom1.getNomTraite()) {
+            for (String s2 : nom2.getNomTraite()) {
                 if (s1.equals(s2)) {
                     totalScore += 1.0;
                 } else {

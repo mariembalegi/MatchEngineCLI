@@ -3,8 +3,8 @@ package MatchEngineCLI;
 public class ComparateurNomsOriginalJaroWinkler implements Comparateur {
     @Override
     public double comparer(Nom nom1, Nom nom2) {
-        String s1 = nom1.nomNonTraite();
-        String s2 = nom2.nomNonTraite();
+        String s1 = nom1.getNomNonTraite();
+        String s2 = nom2.getNomNonTraite();
 
         if (s1.equals(s2)) return 1.0;
         int len1 = s1.length(), len2 = s2.length();

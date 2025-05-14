@@ -10,7 +10,7 @@ public class GenerateurTailleNomsTraiteIndex implements GenerateurCandidats {
         Map<Integer, List<Nom>> map = new HashMap<>();
         // Étape 1 : Parcourir listeNoms2 pour remplir la Map en utilisant nomTraite().size()
         for (Nom nom : listeNoms2) {
-            int tailleNom = nom.nomTraite().size(); // Utiliser size() de nomTraite()
+            int tailleNom = nom.getNomTraite().size(); // Utiliser size() de nomTraite()
             map.putIfAbsent(tailleNom, new ArrayList<>());
             map.get(tailleNom).add(nom);
         }
@@ -18,7 +18,7 @@ public class GenerateurTailleNomsTraiteIndex implements GenerateurCandidats {
         // Étape 2 : Générer les couples de noms
         List<CoupleDeNoms> couples = new ArrayList<>();
         for (Nom nom1 : listeNoms1) {
-            int tailleNom1 = nom1.nomTraite().size(); // Utiliser size() de nomTraite()
+            int tailleNom1 = nom1.getNomTraite().size(); // Utiliser size() de nomTraite()
             // Définir l'intervalle [tailleNom1 - DIFFERENCE_MAX, tailleNom1 + DIFFERENCE_MAX]
             for (int taille = Math.max(1, tailleNom1 - DIFFERENCE_MAX); taille <= tailleNom1 + DIFFERENCE_MAX; taille++) {
                 if (map.containsKey(taille)) {

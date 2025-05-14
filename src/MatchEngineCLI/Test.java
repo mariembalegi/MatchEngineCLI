@@ -77,7 +77,7 @@ public class Test {
                 "Hello",                        // Chaîne avec majuscules
                 "José",                         // Chaîne avec accents
                 "Héllô",                        // Chaîne avec plusieurs accents
-                "John123 Smith",                      // Chaîne avec chiffres
+                "John123",                      // Chaîne avec chiffres
                 "Jean#Paul",                    // Chaîne avec symboles
                 "Jean Paul",                    // Chaîne avec espaces
                 "Jean   Paul",                  // Chaîne avec espaces multiples
@@ -117,7 +117,7 @@ public class Test {
             Nom nom2 = tests.get(i)[1];
             double score = comparateur.comparer(nom1, nom2);
             System.out.printf("Test %2d: '%s' vs '%s' -> Score: %.4f%n",
-                    i + 1, nom1.nomNonTraite(), nom2.nomNonTraite(), score);
+                    i + 1, nom1.getNomNonTraite(), nom2.getNomNonTraite(), score);
         }
     }
 }
