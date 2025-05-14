@@ -149,11 +149,13 @@ public class Main {
     static void afficherMenuComparateur() {
         // TODO
         System.out.println("\n===== MENU COMPARATEUR =====\n");
-        System.out.println("1. Choisir comparateur exact\r\n");
-        System.out.println("2. Choisir comparateur avec N-Gram \r\n");
-        System.out.println("3. choisir comparateru de Levenstein\n");
-        System.out.println("4. choisir comparateru de JaroWinkler\n");
-        System.out.println("5. Quitter");
+        System.out.println("1. Choisir  Comparateur Noms Original Exacte\r\n");
+        System.out.println("2. Choisir Comparateur Noms Original JaroWinkler\r\n");
+        System.out.println("3. choisir Comparateur Noms Original Levenshtein\n");
+        System.out.println("4. choisir Comparateur Noms Traite Exacte \n");
+	System.out.println("5. choisir Comparateur Noms Traite JaroWinkler \n");
+	System.out.println("6. choisir Comparateur Noms Traite Levenshtein \n");
+        System.out.println("7. Quitter");
         System.out.print("Votre choix : ");
     }
 
@@ -164,11 +166,13 @@ public class Main {
             afficherMenuComparateur();
             String choix = scanner.nextLine();
             switch (choix) {
-                case "1" -> choixComparateurExact();
-                case "2" -> choixComparateurNGram();
-                case "3" -> choixComparateurLevenstein() ;
-                case "4" -> choixComparateurJaro();
-                case "5" -> {
+                case "1" -> choixComparateurNomsOriginalExacte();
+                case "2" -> choixComparateurNomsOriginalJaroWinkler();
+                case "3" -> choixComparateurNomsOriginalLevenshtein() ;
+                case "4" -> choixComparateurNomsTraiteExacte();
+		case "5" -> choixComparateurNomsTraiteJaroWinkler();
+		case "6" -> choixComparateurNomsTraiteLevenshtein();	    
+                case "7" -> {
 
                     return;
                 }
@@ -178,24 +182,32 @@ public class Main {
 
 
     }
-    static void choixComparateurExact() {
-        moteur.setComparateurNoms(new ComparateurExact());
+    static void choixComparateurNomsOriginalExacte() {
+        moteur.setComparateur(new  ComparateurNomsOriginalExacte();
 
     }
-    static void choixComparateurJaro() {
-        moteur.setComparateurNoms(new ComparateurJaroWinkler());
+    static void choixComparateurNomsOriginalJaroWinkler() {
+        moteur.setComparateur(new ComparateurNomsOriginalJaroWinkler();
 
     }
-    static void choixComparateurNGram() {
-        System.out.println("\nchoisir le nombre de decomposition : ");
-        int n = scanner.nextInt();
-        moteur.setComparateurNoms(new ComparateurNGram(n));
+    static void choixComparateurNomsOriginalLevenshtein()() {
+        
+        moteur.setComparateur(newComparateurNomsOriginalLevenshtein();
 
     }
-    static void choixComparateurLevenstein() {
-        moteur.setComparateurNoms(new ComparateurLevenstein());
+    static void  choixComparateurNomsTraiteExacte() {
+        moteur.setComparateur(new ComparateurNomsTraiteExacte ());
 
     }
+    static void  choixComparateurNomsTraiteJaroWinkler() {
+        moteur.setComparateur(new ComparateurNomsTraiteJaroWinkler());
+
+    }
+    static void choixComparateurNomsTraiteLevenshtein() {
+        moteur.setComparateur(new ComparateurNomsTraiteLevenshtein);
+
+    }
+
 
 
 
