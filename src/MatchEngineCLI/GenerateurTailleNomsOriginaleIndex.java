@@ -20,7 +20,7 @@ public class GenerateurTailleNomsOriginaleIndex implements GenerateurCandidats {
         List<CoupleDeNoms> couples = new ArrayList<>();
         // Parcourir chaque nom de list1
         for (Nom nom1 : listeNoms1) {
-            int tailleNom1 = nom1.getNomTraite().size();
+            int tailleNom1 = nom1.getNomNonTraite().length();
             // Définir l'intervalle de tailles [taille-1, taille+1]
             for (int taille = Math.max(1, tailleNom1 - DIFFERENCE_MAX); taille <= tailleNom1 + DIFFERENCE_MAX; taille++) {
                 // Vérifier si la taille existe dans la Map
