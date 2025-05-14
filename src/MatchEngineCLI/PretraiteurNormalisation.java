@@ -3,7 +3,7 @@ package MatchEngineCLI;
 import java.text.Normalizer;
 import java.util.List;
 
-public class Normalisation implements Pretraiteur {
+public class PretraiteurNormalisation implements Pretraiteur {
     @Override
     public List<String> pretraiter(String nom) {
         String nomTraite = Normalizer.normalize(nom, Normalizer.Form.NFD)

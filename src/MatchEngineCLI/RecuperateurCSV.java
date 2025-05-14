@@ -8,10 +8,10 @@ import java.util.List;
 import java.util.stream.Stream;
 
 
-public class CSVRecuperateur implements Recuperateur {
+public class RecuperateurCSV implements Recuperateur {
     private String filePath;
 
-    public CSVRecuperateur(String filePath) {
+    public RecuperateurCSV(String filePath) {
         this.filePath = filePath;
     }
     @Override

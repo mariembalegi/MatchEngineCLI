@@ -2,16 +2,12 @@
 import MatchEngineCLI.*;
 
 
-import java.text.Normalizer;
 import java.util.List;
-import java.util.ArrayList;
-
-import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
         Pretraiteur pretraiteur = new PretraiteurPhonetique() ;
-        Pretraiteur pretraiteur2 = new Normalisation();
+        Pretraiteur pretraiteur2 = new PretraiteurNormalisation();
         String nom = "á€¦á€¸á€±á€žá€¬á€„á€¹á€¸";
         List<String> phonetiques = pretraiteur.pretraiter(nom);
         System.out.println(phonetiques);

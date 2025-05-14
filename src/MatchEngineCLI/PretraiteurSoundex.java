@@ -3,7 +3,7 @@ package MatchEngineCLI;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Soundex implements Pretraiteur {
+public class PretraiteurSoundex implements Pretraiteur {
     @Override
     public List<String> pretraiter(String nom) {
         String nomTraite = computeSoundex(nom);
