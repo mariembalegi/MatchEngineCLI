@@ -183,16 +183,16 @@ public class Main {
 
     }
     static void choixComparateurNomsOriginalExacte() {
-        moteur.setComparateur(new  ComparateurNomsOriginalExacte();
+        moteur.setComparateur(new  ComparateurNomsOriginalExacte());
 
     }
     static void choixComparateurNomsOriginalJaroWinkler() {
-        moteur.setComparateur(new ComparateurNomsOriginalJaroWinkler();
+        moteur.setComparateur(new ComparateurNomsOriginalJaroWinkler());
 
     }
     static void choixComparateurNomsOriginalLevenshtein()() {
         
-        moteur.setComparateur(newComparateurNomsOriginalLevenshtein();
+        moteur.setComparateur(newComparateurNomsOriginalLevenshtein());
 
     }
     static void  choixComparateurNomsTraiteExacte() {
