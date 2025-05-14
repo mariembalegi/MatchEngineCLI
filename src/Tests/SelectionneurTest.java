@@ -12,12 +12,13 @@ public class SelectionneurTest {
         // 1. Initialisation
         Comparateur comparateur = new ComparateurNomsTraiteJaroWinkler();
         RecuperateurCSV recuperateur = new RecuperateurCSV(csvPath);
+        GenerateurCandidats generateur = new GenerateurCandidatsComplet(); // Nouvelle classe
 
         // Limiter le nombre de noms pour les tests
         List<Nom> noms = recuperateur.recuperer().subList(0, 10);
 
-        // 2. Génération des couples de test
-        List<CoupleAvecScore> couples = genererCouplesDeTest(noms, comparateur);
+        // 2. Génération des couples de test AVEC GENERATEUR
+        List<CoupleAvecScore> couples = genererCouplesDeTest(noms, comparateur, generateur);
 
         // 3. Tests des différents sélectionneurs
         testerSelectionneur(new SelectionneurNMeilleursMax(3), "Top 3 (Max)", couples);
@@ -25,19 +26,24 @@ public class SelectionneurTest {
         testerSelectionneur(new SelectionneurParSeuil(0.75), "Seuil ≥0.75", couples);
     }
 
-    private static List<CoupleAvecScore> genererCouplesDeTest(List<Nom> noms, Comparateur comparateur) {
+    private static List<CoupleAvecScore> genererCouplesDeTest(List<Nom> noms,
+                                                              Comparateur comparateur,
+                                                              GenerateurCandidats generateur) {
         List<CoupleAvecScore> couples = new ArrayList<>();
         System.out.println("\nGénération des couples de test...");
 
-        for (int i = 0; i < noms.size(); i++) {
-            for (int j = i + 1; j < noms.size(); j++) {
-                double score = comparateur.comparer(noms.get(i), noms.get(j));
-                couples.add(new CoupleAvecScore(noms.get(i), noms.get(j), score));
+        // Utilisation du générateur pour créer les paires
+        List<CoupleDeNoms> paires = generateur.generer(noms, noms);
 
-                System.out.printf("%2d. %-20s vs %-20s → %.4f\n",
-                        couples.size(),
-                        noms.get(i).getNomNonTraite(),
-                        noms.get(j).getNomNonTraite(),
+        for (CoupleDeNoms paire : paires) {
+            // On évite de comparer un nom avec lui-même
+            if (!paire.nom1().getId().equals(paire.nom2().getId())) {
+                double score = comparateur.comparer(paire.nom1(), paire.nom2());
+                couples.add(new CoupleAvecScore(paire.nom1(), paire.nom2(), score));
+
+                System.out.printf("%-20s vs %-20s → %.4f\n",
+                        paire.nom1().getNomNonTraite(),
+                        paire.nom2().getNomNonTraite(),
                         score);
             }
         }
@@ -66,5 +72,19 @@ public class SelectionneurTest {
                     r.nom2().getNomNonTraite(),
                     r.score());
         }
+    }
+}
+
+// Implémentation basique du générateur
+class GenerateurCandidatsComplet implements GenerateurCandidats {
+    @Override
+    public List<CoupleDeNoms> generer(List<Nom> liste1, List<Nom> liste2) {
+        List<CoupleDeNoms> couples = new ArrayList<>();
+        for (Nom nom1 : liste1) {
+            for (Nom nom2 : liste2) {
+                couples.add(new CoupleDeNoms(nom1, nom2));
+            }
+        }
+        return couples;
     }
 }
