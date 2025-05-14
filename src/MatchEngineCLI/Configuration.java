@@ -3,7 +3,7 @@ package MatchEngineCLI;
 import java.util.ArrayList;
 import java.util.List;
 
-public class gitConfiguration {
+public class Configuration {
     // Prétraitement par défaut
     private List<String> pretraiteurs = List.of("PretraiteurDecomposer","PretraiteurNormalisation","PretraiteurSoundex","PretraiteurMetaphone");
     // Indexation par défaut
