@@ -5,7 +5,7 @@ import java.util.*;
 public class Main {
     static MoteurDeMatching moteur = new MoteurDeMatching();
 
-    static Recuperateur recuperateur = new RecuperateurCSV();
+    static Recuperateur recuperateur = new RecuperateurCSV("C:\\Users\\khals_\\OneDrive\\Bureau\\names_matching_peps\\peps_names_2k.csv");
     static  Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
@@ -290,8 +290,9 @@ public class Main {
         System.out.println("\n===== MENU SELECTIONNEUR =====\n");
         System.out.println("1.Choisir selectionneur de tous les resultats\n");
         System.out.println("2.Choisir selectionneur aves seuil\n");
-        System.out.println("3.Choisir selectionneur des N premiers\n");
-        System.out.println("4. Quitter\n");
+        System.out.println("3.Choisir selectionneur des N meilleurs max\n");
+        System.out.println("4.Choisir selectionneur des N meilleurs sort\n");
+        System.out.println("5. Quitter\n");
         System.out.print("Votre choix : ");
 
     }
@@ -352,7 +353,7 @@ public class Main {
         System.out.print("Entrez le nom à rechercher : ");
         String nomOriginal = scanner.nextLine();
 
-        Nom nom = new Nom(nomOriginal,"-1");
+        Nom nom = new Nom("-1",nomOriginal);
         List<Nom> listeOriginale = recuperateur.recuperer();
         long start = System.currentTimeMillis();
 
@@ -367,14 +368,14 @@ public class Main {
         List<CoupleDeNoms> resultats = moteur.rechercher(nom, listeOriginale);
         long end = System.currentTimeMillis();
 
-        System.out.println("\nRésultats pour : " + nom.getNomcomplet());
-        for (CoupleDeNoms ns : resultats) {
+        System.out.println("\nRésultats pour : " + nom.getNomNonTraite());
+        for (CoupleAvecScore ns : resultats) {
 
 
 
             System.out.printf("Nom: %s (Score: %.2f)%n",
-                    ns.getNom2(),
-                    ns.getScore());
+                    ns.nom2(),
+                    ns.score());
         }
 
         System.out.println("Execution time: " + (end - start) + " ms");
@@ -386,7 +387,7 @@ public class Main {
     static void comparerDeuxListes() {
         // TODO
 
-        List<EntiteNom> list1 =new ArrayList<EntiteNom>();
+        List<Nom> list1 =new ArrayList<Nom>();
         list1 = recuperateur.recuperer();
         if (list1 == null || list1.isEmpty()) {
             System.out.println("Erreur : la liste 1  des candidats est vide ou n’a pas pu être chargée.");
@@ -394,7 +395,7 @@ public class Main {
         }
 
 
-        List<EntiteNom> list2 =new ArrayList<EntiteNom>();
+        List<Nom> list2 =new ArrayList<Nom>();
         list2 = recuperateur.recuperer();
         if (list2 == null || list2.isEmpty()) {
             System.out.println("Erreur : la liste 2 des candidats est vide ou n’a pas pu être chargée.");
@@ -402,8 +403,8 @@ public class Main {
         }
         long start = System.currentTimeMillis();
 
-        List<CoupleNomsScore> resultat = new ArrayList<>();
-        resultat = moteur.ComparerListes(list1, list2);
+        List<CoupleAvecScore> resultat = new ArrayList<>();
+        resultat = moteur.comparerListes(list1, list2);
 
 
 
@@ -413,7 +414,7 @@ public class Main {
             System.out.println("Aucun résultat trouvé.");
             return;
         }
-        for(CoupleNomsScore couple : resultat) {
+        for(CoupleAvecScore couple : resultat) {
             System.out.println(couple);
 
 
@@ -424,14 +425,14 @@ public class Main {
     static void effectuerDedupliquerListe() {
         // TODO
 
-        List<EntiteNom> listeOriginale = recuperateur.recuperer();
+        List<Nom> listeOriginale = recuperateur.recuperer();
 
         if (listeOriginale == null || listeOriginale.isEmpty()) {
             System.out.println("Erreur : la liste des candidats est vide ou n'a pas pu être chargée.");
             return;
         }
         long start = System.currentTimeMillis();
-        moteur.DedupliquerList(listeOriginale);
+        moteur.dedupliquerListe(listeOriginale);
         // List<CoupleNomsScore> resultat = new ArrayList<>(moteur.DedupliquerList(listeOriginale));
         long end = System.currentTimeMillis();
 			   /* if (resultat == null || resultat.isEmpty()) {

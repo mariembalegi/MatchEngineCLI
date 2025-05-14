@@ -86,5 +86,11 @@ public class MoteurDeMatching {
     public void setSelectionneur(Selectionneur selectionneur) {
         this.selectionneur = selectionneur;
     }
+    public Selectionneur getSelectionneur() {
+        return selectionneur;
+    }
+    public void setComparateur(Comparateur comparateurNoms) {
+        this.comparateur = comparateurNoms;
+    }
 
 }

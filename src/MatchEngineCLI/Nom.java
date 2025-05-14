@@ -9,10 +9,10 @@ public class Nom {
     private List<String> nomTraite;
 
     // Constructeur
-    public Nom(String id, String nomNonTraite, List<String> nomTraite) {
+    public Nom(String id, String nomNonTraite) {
         this.id = id;
         this.nomNonTraite = nomNonTraite;
-        this.nomTraite = nomTraite;
+        this.nomTraite = List.of(nomNonTraite);
     }
 
     // Getters
