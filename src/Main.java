@@ -340,8 +340,8 @@ public class Main {
         System.out.print("Entrez le nom à rechercher : ");
         String nomOriginal = scanner.nextLine();
 
-        EntiteNom nom = new EntiteNom(nomOriginal,"-1");
-        List<EntiteNom> listeOriginale = recuperateur.recuperer();
+        Nom nom = new Nom(nomOriginal,"-1");
+        List<Nom> listeOriginale = recuperateur.recuperer();
         long start = System.currentTimeMillis();
 
 
@@ -352,11 +352,11 @@ public class Main {
 
 
 
-        List<CoupleNomsScore> resultats = moteur.rechercher(nom, listeOriginale);
+        List<CoupleDeNoms> resultats = moteur.rechercher(nom, listeOriginale);
         long end = System.currentTimeMillis();
 
         System.out.println("\nRésultats pour : " + nom.getNomcomplet());
-        for (CoupleNomsScore ns : resultats) {
+        for (CoupleDeNoms ns : resultats) {
 
 
 
