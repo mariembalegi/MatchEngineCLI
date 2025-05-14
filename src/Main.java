@@ -202,13 +202,11 @@ public class Main {
 
     static void afficheMenuPretraiteur() {
         System.out.println("\n===== MENU PRETRAITEUR =====\n");
-        System.out.println("Le pretraiteur par defaut est le pretraiteur en minuscule\n");
-        System.out.println("1.suprimer le pretraiteur en minuscule\n");
-        System.out.println("2. Encodage phonétique\n");
-        System.out.println("3. Pretraire suprime les accents \n");
-        System.out.println("4. Pretraiteur suprime les caractaires speciciaux\n");
-        System.out.println("5. Pretraiteur de tri les noms\n");
-        System.out.println("6. Quitter\n");
+        System.out.println("1. prétraiteur normalisation\n");
+        System.out.println("2. prétraiteur décomposeur\n");
+        System.out.println("3. prétraiteur soundex \n");
+        System.out.println("4. Pretraiteur metaphone\n");
+        System.out.println("5. Quitter\n");
         System.out.print("Votre choix : ");
 
     }
@@ -218,12 +216,11 @@ public class Main {
             String choix = scanner.nextLine();
 
             switch (choix) {
-                case "1" -> suprimerpretraiterMinuscule();
-                case "2" -> pretraiterPhonetique();
-                case "3" -> pretraiterAccents();
-                case "4" -> pretraiteurSansCaracteresSpeciaux();
-                case "5" -> pretraiteurDeTRiNom();
-                case "6" ->{
+                case "1" -> PretraiteurNormalisation();
+                case "2" -> PretraiteurDecomposeur();
+                case "3" -> PretraiteurSoundex();
+                case "4" -> PretraiteurMetaphone();
+                case "5" ->{
                     return;
                 }
                 default -> System.out.println("Choix invalide.");
@@ -231,58 +228,50 @@ public class Main {
         }
     }
 
-    static void pretraiteurDeTRiNom() {
+    static void PretraiteurNormalisation() {
         for (Pretraiteur p : moteur.getPretraiteur()) {
-            if (p instanceof  PretraiteurDeTRiNom) {
+            if (p instanceof  PretraiteurNormalisation()) {
                 System.out.println("ce pretraiteur exist deja!!");
                 return;
             }
         }
 
-        moteur.getPretraiteur().add(new PretraiteurDeTRiNom());
+        moteur.getPretraiteur().add(new PretraiteurNormalisation());
 
     }
 
-    static void pretraiterPhonetique(){
+    static void PretraiteurDecomposeur(){
         for (Pretraiteur p : moteur.getPretraiteur()) {
-            if (p instanceof  PretraiteurPhonetique) {
+            if (p instanceof  PretraiteurDecomposeur) {
                 System.out.println("ce pretraiteur exist deja!!");
                 return;
             }
         }
 
-        moteur.getPretraiteur().add(new PretraiteurPhonetique());
+        moteur.getPretraiteur().add(new PretraiteurDecomposeur());
 
     }
-    static void pretraiterAccents() {
+    static void PretraiteurSoundex() {
         for (Pretraiteur p : moteur.getPretraiteur()) {
-            if (p instanceof  PretraiteurSansAccents)  {
+            if (p instanceof  PretraiteurSoundex)  {
                 System.out.println("ce pretraiteur exist deja!!");
                 return;
             }
         }
-        moteur.getPretraiteur().add(new PretraiteurSansAccents());
+        moteur.getPretraiteur().add(new PretraiteurSoundex());
 
     }
-    static void suprimerpretraiterMinuscule() {
-        Iterator<Pretraiteur> it = moteur.getPretraiteur().iterator();
-        while (it.hasNext()) {
-            Pretraiteur p = it.next();
-            if (p instanceof PretraiteurMinuscule) {
-                it.remove();
-            }
-        }
-    }
-    static void pretraiteurSansCaracteresSpeciaux() {
+    static void PretraiteurMetaphone() {
         for (Pretraiteur p : moteur.getPretraiteur()) {
-            if (p instanceof  PretraiteurSansCaracteresSpeciaux) {
+            if (p instanceof  PretraiteurMetaphone)  {
                 System.out.println("ce pretraiteur exist deja!!");
                 return;
-
             }
         }
-        moteur.getPretraiteur().add(new PretraiteurSansCaracteresSpeciaux());
+        moteur.getPretraiteur().add(new PretraiteurMetaphone());
+
     }
+
 
 
     static void afficheMenuSelectionneur() {
@@ -302,10 +291,11 @@ public class Main {
             String choix = scanner.nextLine();
 
             switch (choix) {
-                case "1" -> SelectionneurDeTousLesResultats();
-                case "2" -> SelectionneurAvecSeuil();
-                case "3" -> SelectionneurNPremiers();
-                case "4" -> {
+                case "1" -> SelectionneurSansLesResultats();
+                case "2" -> SelectionneurParSeuil();
+                case "3" -> SelectionneurNMeilleursmax();
+                case "4" -> SelectionneurNMeilleurssort();
+                case "5" -> {
                     return;
                 }
                 default -> System.out.println("Choix invalide.");
@@ -313,8 +303,8 @@ public class Main {
         }
     }
 
-    static void SelectionneurDeTousLesResultats() {
-        moteur.setSelectionneur(new SelectionneurDeTousLesResultats());
+    static void SelectionneurSansLesResultats() {
+        moteur.setSelectionneur(new SelectionneurSansResultat());
 
     }
     static void SelectionneurAvecSeuil() {
@@ -325,19 +315,27 @@ public class Main {
         try {
             double seuil = Double.parseDouble(saisie);
             System.out.println("Seuil accepté : " + seuil);
-            moteur.setSelectionneur(new SelectionneurAvecSeuil(seuil));
+            moteur.setSelectionneur(new SelectionneurParSeuil(seuil));
         } catch (NumberFormatException e) {
             System.out.println("Erreur : valeur non valide !");
         }
 
     }
-    static void SelectionneurNPremiers() {
+    static void SelectionneurNMeilleursmax() {
         System.out.println("Entrez le nombre de resultats a selectionner : ");
         int n = scanner.nextInt();
         scanner.nextLine();
-        moteur.setSelectionneur(new SelectionneurNPremiers(n));
+        moteur.setSelectionneur(new SelectionneurNMeilleursMax(n));
 
     }
+    static void SelectionneurNMeilleurssort() {
+        System.out.println("Entrez le nombre de resultats a selectionner : ");
+        int n = scanner.nextInt();
+        scanner.nextLine();
+        moteur.setSelectionneur(new SelectionneurNMeilleursSort(n));
+
+    }
+
     static void effectuerRecherche()  {
         System.out.print("Entrez le nom à rechercher : ");
         String nomOriginal = scanner.nextLine();

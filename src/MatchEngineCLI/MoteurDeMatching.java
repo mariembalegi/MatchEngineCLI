@@ -77,6 +77,14 @@ public class MoteurDeMatching {
     public List<CoupleAvecScore> dedupliquerListe(List<Nom> liste) {
         return comparerListes(liste, liste);
     }
-
+    public void setGenerateurCandidats(GenerateurCandidats generateurCandidats) {
+        this.generateur = generateurCandidats;
+    }
+    public List<Pretraiteur> getPretraiteur() {
+        return pretraiteurs;
+    }
+    public void setSelectionneur(Selectionneur selectionneur) {
+        this.selectionneur = selectionneur;
+    }
 
 }
