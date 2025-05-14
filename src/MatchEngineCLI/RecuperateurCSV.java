@@ -27,5 +27,4 @@ public class RecuperateurCSV implements Recuperateur {
             return List.of();
         }
     }
-
 }

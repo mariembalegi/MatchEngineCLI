@@ -6,11 +6,10 @@ public class SelectionneurSansResultat implements Selectionneur {
 
     @Override
     public List<CoupleAvecScore> selectionner(List<CoupleAvecScore> resultatsAvecScore) {
-        List<CoupleAvecScore> resultats = new ArrayList<>();
-        
+        List<CoupleAvecScore> resultat = new ArrayList<>();
         for (CoupleAvecScore coupleAvecScore : resultatsAvecScore) {
-            resultats.add(new CoupleAvecScore(coupleAvecScore.nom1(), coupleAvecScore.nom2(),coupleAvecScore.score()));
+            resultat.add(new CoupleAvecScore(coupleAvecScore.nom1(), coupleAvecScore.nom2(),coupleAvecScore.score()));
         }
-        return resultats;
+        return resultat;
     }
 }

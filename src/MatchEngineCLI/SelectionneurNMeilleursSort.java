@@ -6,9 +6,8 @@ import java.util.List;
 public class SelectionneurNMeilleursSort implements Selectionneur {
     private final int n;
 
-    public SelectionneurNMeilleursSort(int n) {
-        this.n = n;
-    }
+    public SelectionneurNMeilleursSort(int n) {this.n = n;}
+
     @Override
     public List<CoupleAvecScore> selectionner(List<CoupleAvecScore> resultatsAvecScore) {
         List<CoupleAvecScore> copie = new ArrayList<>(resultatsAvecScore);

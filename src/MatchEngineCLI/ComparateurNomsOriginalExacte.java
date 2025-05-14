@@ -4,11 +4,6 @@ package MatchEngineCLI;
 public class ComparateurNomsOriginalExacte implements Comparateur {
     @Override
     public double comparer(Nom nom1, Nom nom2) {
-        boolean sontEgaux = nom1.equals(nom2);
-        if (sontEgaux) {
-            return 1 ;
-        } else {
-            return 0 ;
-        }
+        return nom1.nomNonTraite().equals(nom2.nomNonTraite()) ? 1 : 0;
     }
 }

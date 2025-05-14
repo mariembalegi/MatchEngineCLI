@@ -10,12 +10,9 @@ public class GenerateurTailleNomsOriginale implements GenerateurCandidats {
         List<CoupleDeNoms> couples = new ArrayList<>();
         for (Nom nom1 : liste1) {
             String s1 = nom1.nomNonTraite();
-
             for (Nom nom2 : liste2) {
                 String s2 = nom2.nomNonTraite();
-
                 int diff = Math.abs(s1.length() - s2.length());
-
                 if (diff <= DIFFERENCE_MAX) {
                     couples.add(new CoupleDeNoms(nom1, nom2));
                 }
