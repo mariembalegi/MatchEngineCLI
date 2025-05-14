@@ -204,7 +204,7 @@ public class Main {
 
     }
     static void choixComparateurNomsTraiteLevenshtein() {
-        moteur.setComparateur(new ComparateurNomsTraiteLevenshtein);
+        moteur.setComparateur(new ComparateurNomsTraiteLevenshtein());
 
     }
 
