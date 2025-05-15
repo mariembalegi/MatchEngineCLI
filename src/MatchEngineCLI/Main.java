@@ -21,15 +21,26 @@ public class Main {
         pretraiteurs.add(new PretraiteurNormalisation());
         pretraiteurs.add(new PretraiteurDecomposeur());
 
-        moteur.setComparateur(new ComparateurNomsOriginalExacte());
+        moteur.setComparateur(new ComparateurNomsOriginalLevenshtein());
         moteur.setSelectionneur(new SelectionneurNMeilleursSort(10));
-        moteur.setPretraiteurs(pretraiteurs);
+        moteur.setPretraiteur(pretraiteurs);
         moteur.setGenerateurCandidats(new GenerateurTailleNomsOriginaleIndex());
         moteur.setSeuil(0.6);
         moteur.setNbMax(10);
 
-        while (true) {
-            afficherMenuPrincipal();
+        afficherMenuPrincipal();
+
+    }
+
+    static void afficherMenuPrincipal() {
+        System.out.println("\n===== MENU PRINCIPAL =====\n");
+        System.out.println("1. Effectuer une recherche\n");
+        System.out.println("2. Comparer deux listes\n");
+        System.out.println("3. Dédupliquer une liste\n");
+        System.out.println("4. Configurer les paramètres\n");
+        System.out.println("5. Quitter\n");
+        System.out.print("Votre choix : ");
+
             String choix = scanner.nextLine();
 
             switch (choix) {
@@ -44,24 +55,9 @@ public class Main {
                 }
                 default -> System.out.println("Choix invalide.");
             }
-
-
-        }
-
-    }
-
-    static void afficherMenuPrincipal() {
-        System.out.println("\n===== MENU PRINCIPAL =====\n");
-        System.out.println("1. Effectuer une recherche\n");
-        System.out.println("2. Comparer deux listes\n");
-        System.out.println("3. Dédupliquer une liste\n");
-        System.out.println("4. Configurer les paramètres\n");
-        System.out.println("5. Quitter\n");
-        System.out.print("Votre choix : ");
     }
 
     static void afficherMenuConfiguration() {
-        // TODO
         System.out.println("\n===== MENU CONFIGURATION =====");
         System.out.println("1. Choisir les prétraitements\r\n");
         System.out.println("2. Choisir une mesure de comparaison\r\n");
@@ -74,7 +70,6 @@ public class Main {
 
     static void configurerParametres() {
 
-        while (true) {
             afficherMenuConfiguration();
             String choix = scanner.nextLine();
             switch (choix) {
@@ -82,13 +77,9 @@ public class Main {
                 case "2" -> choixComparateur();
                 case "3" -> choixGenerateurDeCandidats();
                 case "4" -> choixSelectionneur();
-                case "5" -> {
-
-                    return;
-                }
+                case "5" -> afficherMenuPrincipal();
                 default -> System.out.println("\nChoix invalide.");
             }
-        }
 
 
     }
@@ -97,18 +88,17 @@ public class Main {
 
         System.out.println("\n===== MENU GENERATEUR DE CANDIDATS =====");
         System.out.println("1. Choisir tous combinisants possibles\r\n");
-        System.out.println("3. Choisir generateur par prefix \r\n");
-        System.out.println("4. Choisir generateur par taille de noms original \r\n");
-        System.out.println("5. Choisir generateur par taille de noms traités \r\n");
-        System.out.println("6. Choisir generateur par taille de noms original index \r\n");
-        System.out.println("7. Choisir generateur par taille de noms traités index \r\n");
-        System.out.println("8. Quitter\n");
+        System.out.println("2. Choisir generateur par prefix \r\n");
+        System.out.println("3. Choisir generateur par taille de noms original \r\n");
+        System.out.println("4. Choisir generateur par taille de noms traités \r\n");
+        System.out.println("5. Choisir generateur par taille de noms original index \r\n");
+        System.out.println("6. Choisir generateur par taille de noms traités index \r\n");
+        System.out.println("7. Quitter\n");
         System.out.print("Votre choix : ");
     }
 
     static void choixGenerateurDeCandidats() {
 
-        while (true) {
             afficherMenuGenerateurDeCandidats();
             String choix = scanner.nextLine();
             switch (choix) {
@@ -118,9 +108,9 @@ public class Main {
                 case "4" -> generateurParTailleTraite();
                 case "5" -> generateurParTailleOriginaleIndex();
                 case "6" -> generateurParTailleTraiteIndex();
+                case "7" -> afficherMenuPrincipal();
                 default -> System.out.println("\nChoix invalide.");
             }
-        }
 
 
     }
@@ -180,10 +170,7 @@ public class Main {
                 case "4" -> choixComparateurNomsTraiteExacte();
                 case "5" -> choixComparateurNomsTraiteJaroWinkler();
                 case "6" -> choixComparateurNomsTraiteLevenshtein();
-                case "7" -> {
-
-                    return;
-                }
+                case "7" -> afficherMenuPrincipal();
                 default -> System.out.println("Choix invalide.");
             }
         }
@@ -244,9 +231,7 @@ public class Main {
                 case "2" -> PretraiteurDecomposeur();
                 case "3" -> PretraiteurSoundex();
                 case "4" -> PretraiteurMetaphone();
-                case "5" -> {
-                    return;
-                }
+                case "5" -> afficherMenuPrincipal();
                 default -> System.out.println("Choix invalide.");
             }
         }
@@ -321,9 +306,7 @@ public class Main {
                 case "2" -> SelectionneurParSeuil();
                 case "3" -> SelectionneurNMeilleursmax();
                 case "4" -> SelectionneurNMeilleurssort();
-                case "5" -> {
-                    return;
-                }
+                case "5" -> afficherMenuPrincipal();
                 default -> System.out.println("Choix invalide.");
             }
         }
@@ -371,7 +354,7 @@ public class Main {
         Nom nom = new Nom("-1", nomOriginal);
         List<Nom> listeOriginale = recuperateur.recuperer();
 
-        System.out.println(listeOriginale.size());
+
         long start = System.currentTimeMillis();
 
 
@@ -386,18 +369,18 @@ public class Main {
 
         System.out.println("\nRésultats pour : " + nom.getNomNonTraite());
         for (NomAvecScore ns : resultats) {
-            System.out.printf("Nom: %s (Score: %.2f)%n",
-                    ns.nom(),
+            System.out.printf("id %s Nom: %s (Score: %.2f)%n", ns.nom().getId(),
+                    ns.nom().getNomNonTraite(),
                     ns.score());
         }
 
         System.out.println("Execution time: " + (end - start) + " ms");
 
+        afficherMenuPrincipal();
 
     }
 
     static void comparerDeuxListes() {
-        // TODO
 
         List<Nom> list1 = new ArrayList<Nom>();
         list1 = recuperateur.recuperer();
@@ -426,15 +409,16 @@ public class Main {
             return;
         }
         for (CoupleAvecScore couple : resultat) {
-            System.out.println(couple);
+            System.out.printf("id1: %s  nom1: %s ; id2: %s  nom2:%s  (Score: %.2f)%n", couple.nom1().getId(), couple.nom1().getNomNonTraite()
+                    , couple.nom2().getId(), couple.nom1().getNomNonTraite(), couple.score());
 
 
         }
         System.out.println("Execution time: " + (end - start) + " ms");
+        afficherMenuPrincipal();
     }
 
     static void effectuerDedupliquerListe() {
-        // TODO
 
         List<Nom> listeOriginale = recuperateur.recuperer();
 
@@ -443,20 +427,24 @@ public class Main {
             return;
         }
         long start = System.currentTimeMillis();
-        moteur.dedupliquerListe(listeOriginale);
-        // List<CoupleNomsScore> resultat = new ArrayList<>(moteur.DedupliquerList(listeOriginale));
-        long end = System.currentTimeMillis();
-			   /* if (resultat == null || resultat.isEmpty()) {
-		            System.out.println("Aucun résultat trouvé.");
-		            return;
-		        }
-			    resultat = moteur.getSelectionneur().selectionner(resultat);
 
-				 for(CoupleNomsScore couple : resultat) {
-					 System.out.println(couple);
-				 }
-				 */
+        List<CoupleAvecScore> resultat = moteur.dedupliquerListe(listeOriginale);
+        long end = System.currentTimeMillis();
+
+        if (resultat == null || resultat.isEmpty()) {
+            System.out.println("Aucun résultat trouvé.");
+            return;
+        }
+
+        resultat = moteur.getSelectionneur().selectionner(resultat);
+
+        for (CoupleAvecScore couple : resultat) {
+            System.out.printf("id1: %s  nom1: %s ; id2: %s  nom2:%s  (Score: %.2f)%n", couple.nom1().getId(), couple.nom1().getNomNonTraite()
+                    , couple.nom2().getId(), couple.nom1().getNomNonTraite(), couple.score());
+        }
         System.out.println("Execution time: " + (end - start) + " ms");
+
+        afficherMenuPrincipal();
     }
 
 

@@ -8,8 +8,8 @@ public class MoteurDeMatching {
     private Comparateur comparateur;
     private Selectionneur selectionneur;
     private GenerateurCandidats generateur;
-    private double seuil = 0.6;
-    private int nbMax = 10;
+    private static double seuil = 0.6;
+    private static int nbMax = 10;
 
     public List<NomAvecScore> rechercher(Nom nomRecherche, List<Nom> listeNoms) {
         //Pretraitement Liste
@@ -24,7 +24,6 @@ public class MoteurDeMatching {
             }
             nom.setNomTraite(nomsATraiter);
         }
-
         //Pretraitement nomRecherche
         List<String> nomAtraiter = nomRecherche.getNomTraite();
         for (Pretraiteur pretraiteur : pretraiteurs) {
@@ -37,10 +36,10 @@ public class MoteurDeMatching {
 
         nomRecherche.setNomTraite(nomAtraiter);
 
-        nomAtraiter.forEach(System.out::println);
 
         //generer les candidats
         List<CoupleDeNoms> candidats = generateur.generer(List.of(nomRecherche), listeNoms);
+
 
         // comparaison
         List<CoupleAvecScore> resultatsAvecScore = new ArrayList<>();
@@ -74,12 +73,9 @@ public class MoteurDeMatching {
         return comparerListes(liste, liste);
     }
 
+
     public void setGenerateurCandidats(GenerateurCandidats generateurCandidats) {
         this.generateur = generateurCandidats;
-    }
-
-    public List<Pretraiteur> getPretraiteur() {
-        return pretraiteurs;
     }
 
     public Selectionneur getSelectionneur() {
@@ -110,11 +106,11 @@ public class MoteurDeMatching {
         this.nbMax = nbMax;
     }
 
-    public List<Pretraiteur> getPretraiteurs() {
-        return pretraiteurs;
+    public List<Pretraiteur> getPretraiteur() {
+        return this.pretraiteurs;
     }
 
-    public void setPretraiteurs(List<Pretraiteur> pretraiteurs) {
+    public void setPretraiteur(List<Pretraiteur> pretraiteurs) {
         this.pretraiteurs = pretraiteurs;
     }
 }
